@@ -1,0 +1,8 @@
+[workspace]
+resolver = "2"
+members = [
+    "dev/chapter02/hello_world/hello_world_guest",
+    "dev/chapter02/hello_world/hello_world_host",
+    "dev/chapter03/smart_cms/smartcms_test_host",
+    "dev/chapter04/hello_world_wasi/hello_world_wasi_host",
+]
