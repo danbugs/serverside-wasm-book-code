@@ -5,11 +5,11 @@ wasmtime::component::bindgen!({
     world: "app",
 });
 
-struct Keyvalue {
+struct KeyValue {
     mem: std::collections::HashMap<String, String>,
 }
 
-impl crate::component::smartcms::kvstore::Host for Keyvalue {
+impl crate::component::smartcms::kvstore::Host for KeyValue {
     fn get(&mut self, key: String) -> Option<String> {
         self.mem.get(&key).cloned()
     }
@@ -20,7 +20,7 @@ impl crate::component::smartcms::kvstore::Host for Keyvalue {
 }
 
 struct State {
-    key_value: Keyvalue,
+    key_value: KeyValue,
 }
 
 fn main() {
@@ -29,7 +29,7 @@ fn main() {
 
     let engine = wasmtime::Engine::new(&config).unwrap();
 
-    let mut store = wasmtime::Store::new(&engine, State { key_value: Keyvalue { mem: std::collections::HashMap::new() } });
+    let mut store = wasmtime::Store::new(&engine, State { key_value: KeyValue { mem: std::collections::HashMap::new() } });
 
     let component = wasmtime::component::Component::from_file(&engine, "guest.wasm").unwrap();
 
