@@ -10,7 +10,7 @@ The book is still under development, so this repository will be updated as I pro
     - [x] Chapter 1 (Introduction to Wasm on the Server)
     - [x] Chapter 2 (Building Server-Side Applications with Wasm Modules)
     - [x] Chapter 3 (Enhancing Portability and Security with Wasm Components)
-    - [ ] Chapter 4 (Interfacing Wasm with the Underlying System)
+    - [x] Chapter 4 (Interfacing Wasm with the Underlying System)
 - Part 2: Production-Grade Wasm
     - [ ] Chapter 5 (Interfacing Wasm with the Cloud)
     - [ ] Chapter 6 (Creating Production-Grade Wasm Applications)
