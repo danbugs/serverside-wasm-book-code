@@ -19,3 +19,16 @@ The book is still under development, so this repository will be updated as I pro
     - [ ] Chapter 8 (Introducing Wasm Containers with Docker)
     - [ ] Chapter 9 (Scalability for Wasm with Kubernetes)
     - [ ] Chapter 10 (Wasm for Edge Devices and IoT)
+
+## Platform Used
+
+Unless specified, all examples in this repository were run on:
+```bash
+HP ENVY Laptop 15-ep1xxx
+Microsoft Windows 11 Pro
+x64-based PC
+11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz
+Intel(R) UHD Graphics 1073741824 / NVIDIA GeForce RTX 3050 Laptop GPU 4293918720
+8 cores
+16GB RAM
+```

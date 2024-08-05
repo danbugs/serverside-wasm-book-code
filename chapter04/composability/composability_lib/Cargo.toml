@@ -1,0 +1,26 @@
+[package]
+name = "composability_lib"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+wit-bindgen-rt = { version = "0.28.0", features = ["bitflags"] }
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+codegen-units = 1
+opt-level = "s"
+debug = false
+strip = true
+lto = true
+
+[package.metadata.component]
+package = "composability:lib"
+
+[package.metadata.component.target]
+path = "../wit/lib.wit"
+world = "lib"
+
+[package.metadata.component.dependencies]

@@ -1,0 +1,23 @@
+[package]
+name = "smartcms_ml_guest"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+wit-bindgen-rt = { version = "0.29.0", features = ["bitflags"] }
+rand = "0.8.5"
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+codegen-units = 1
+opt-level = "s"
+debug = false
+strip = true
+lto = true
+
+[package.metadata.component]
+package = "component:smartcms-ml-guest"
+
+[package.metadata.component.dependencies]

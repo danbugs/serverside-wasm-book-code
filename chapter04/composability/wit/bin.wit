@@ -1,0 +1,6 @@
+package composability:bin;
+
+world bin {
+  import hello-world: func() -> string;
+}
+
