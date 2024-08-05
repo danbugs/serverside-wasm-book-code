@@ -1,0 +1,23 @@
+[package]
+name = "composability_bin"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+wit-bindgen-rt = { version = "0.28.0", features = ["bitflags"] }
+
+[profile.release]
+codegen-units = 1
+opt-level = "s"
+debug = false
+strip = true
+lto = true
+
+[package.metadata.component]
+package = "composability:bin"
+
+[package.metadata.component.target]
+path = "../wit/bin.wit"
+world = "bin"
+
+[package.metadata.component.dependencies]

@@ -1,8 +1,13 @@
 [workspace]
 resolver = "2"
 members = [
-    "dev/chapter02/hello_world/hello_world_guest",
-    "dev/chapter02/hello_world/hello_world_host",
-    "dev/chapter03/smart_cms/smartcms_test_host",
-    "dev/chapter04/hello_world_wasi/hello_world_wasi_host",
+    "chapter02/hello_world/hello_world_guest",
+    "chapter02/hello_world/hello_world_host",
+    "chapter03/smart_cms/smartcms_test_host",
+    "chapter04/hello_world_wasi/hello_world_wasi_host",
+    "chapter04/wasi02/hello_world_wasi02",
+    "chapter04/wasi02/wasi02_lib",
+    "chapter04/composability/composability_bin",
+    "chapter04/composability/composability_lib",
+    "chapter04/smart_cms/smartcms_test_host", "chapter04/smart_cms/smartcms_ml_guest",
 ]

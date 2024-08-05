@@ -1,0 +1,11 @@
+package component:smartcms;
+
+interface kvstore {
+    get: func(key: string) -> option<string>;
+    set: func(key: string, value: string);
+}
+
+world app {
+    import kvstore;
+    export run: func() -> string;
+}

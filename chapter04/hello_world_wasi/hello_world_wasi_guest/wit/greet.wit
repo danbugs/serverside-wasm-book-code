@@ -1,0 +1,5 @@
+package component:hello-world-guest-wit;
+
+world example {
+    export greet: func(name: string);
+}

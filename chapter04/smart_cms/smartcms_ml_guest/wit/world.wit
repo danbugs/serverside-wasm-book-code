@@ -1,0 +1,5 @@
+package component:smartcms-ml-guest;
+
+world example {
+    export storygen: func() -> string;
+}

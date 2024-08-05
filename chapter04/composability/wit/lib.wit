@@ -1,0 +1,5 @@
+package composability:lib;
+
+world lib {
+    export hello-world: func() -> string;
+}
