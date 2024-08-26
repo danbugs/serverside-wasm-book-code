@@ -1,5 +1,3 @@
-use crate::component::smartcms::kvstore;
-
 wasmtime::component::bindgen!({
     path: "./smart_cms.wit",
     world: "app",
@@ -10,7 +8,7 @@ struct KeyValue {
 }
 
 impl crate::component::smartcms::kvstore::Host for KeyValue {
-    fn get(&mut self, key: String) -> Option<String> {
+    fn get(&self, key: String) -> Option<String> {
         self.mem.get(&key).cloned()
     }
 
@@ -34,9 +32,9 @@ fn main() {
     let component = wasmtime::component::Component::from_file(&engine, "guest.wasm").unwrap();
 
     let mut linker = wasmtime::component::Linker::new(&engine);
-    kvstore::add_to_linker(&mut linker, |state: &mut State| &mut state.key_value).unwrap();
+    crate::component::smartcms::kvstore::add_to_linker(&mut linker, |state: &mut State| &mut state.key_value).unwrap();
 
-    let (instance, _) = App::instantiate(&mut store, &component, &linker).unwrap();
+    let (instance, actual_instance) = App::instantiate(&mut store, &component, &linker).unwrap();
 
     println!("{:?}", instance.call_run(&mut store).unwrap());
 }

@@ -1,1 +1,1 @@
-wasmtime
+wasmtime==21.0.0
