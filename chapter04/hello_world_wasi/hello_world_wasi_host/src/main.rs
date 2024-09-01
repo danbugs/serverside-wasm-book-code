@@ -1,5 +1,5 @@
 wasmtime::component::bindgen!({
-    path: "../wit",
+    path: "../hello_world_wasi_guest/wit",
     world: "example",
 });
 
@@ -31,7 +31,7 @@ fn main() {
         .build();
 
     let mut store = wasmtime::Store::new(&engine, State { wasi, table: wasmtime_wasi::ResourceTable::new() });
-    let component = wasmtime::component::Component::from_file(&engine, "../greet.wasm").unwrap();
+    let component = wasmtime::component::Component::from_file(&engine, "../hello_world_wasi_guest/greet.wasm").unwrap();
 
     let (instance, _) = Example::instantiate(&mut store, &component, &linker).unwrap();
 
