@@ -7,7 +7,7 @@ struct KeyValue {
     mem: std::collections::HashMap<String, String>,
 }
 
-impl crate::component::smartcms::kvstore::Host for KeyValue {
+impl component::smartcms::kvstore::Host for KeyValue {
     fn get(&self, key: String) -> Option<String> {
         self.mem.get(&key).cloned()
     }
@@ -32,7 +32,7 @@ fn main() {
     let component = wasmtime::component::Component::from_file(&engine, "guest.wasm").unwrap();
 
     let mut linker = wasmtime::component::Linker::new(&engine);
-    crate::component::smartcms::kvstore::add_to_linker(&mut linker, |state: &mut State| &mut state.key_value).unwrap();
+    component::smartcms::kvstore::add_to_linker(&mut linker, |state: &mut State| &mut state.key_value).unwrap();
 
     let (instance, actual_instance) = App::instantiate(&mut store, &component, &linker).unwrap();
 

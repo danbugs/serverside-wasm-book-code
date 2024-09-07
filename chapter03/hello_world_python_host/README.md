@@ -4,10 +4,10 @@
 
 ```bash
 # install deps from requirements.txt
-py -m pip install -r requirements.txt
+python -m pip install -r requirements.txt
 
 # run the script
-py main.py
+python main.py
 # note: need greet.wasm in the same directory as main.py
 ```
 
