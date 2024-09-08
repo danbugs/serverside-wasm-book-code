@@ -1,6 +1,6 @@
-# Server-side Wasm: Building and Deploying Lightweight Apps
+# Server-side WebAssembly: Building and Deploying Lightweight Apps
 
-This is a repository to store the code used in my upcoming book: "Server-side Wasm: Building and Deploying Lightweight Apps".
+This is a repository to store the code used in my upcoming book: "Server-side WebAssembly: Building and Deploying Lightweight Apps".
 
 The book is still under development, so this repository will be updated as I progress through the book.
 
