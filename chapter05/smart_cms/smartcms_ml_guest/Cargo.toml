@@ -1,0 +1,31 @@
+[package]
+name = "smartcms_ml_guest_chapter05"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+wit-bindgen-rt = { version = "0.29.0", features = ["bitflags"] }
+wit-bindgen = { version = "0.33.0",  default-features = false, features = ["macros"] }
+tokenizers = { version = "0.20.1", default-features = false, features = ["unstable_wasm"] }
+rand = "0.8.5"
+ndarray = "0.16.1"
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+codegen-units = 1
+opt-level = "s"
+debug = false
+strip = true
+lto = true
+
+[package.metadata.component]
+package = "component:smartcms-ml-guest"
+
+[package.metadata.component.target]
+path = "wit/world.wit"
+world = "example"
+
+[package.metadata.component.target.dependencies]
+"wasi:nn" = { path = "wit/wasi-nn.wit" }

@@ -1,0 +1,22 @@
+[package]
+name = "wasi_nn_example_2"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+wit-bindgen = { version = "0.33.0",  default-features = false, features = ["macros"] }
+tokenizers = { version = "0.20.1", default-features = false, features = ["unstable_wasm"] }
+rand = "0.8.5"
+ndarray = "0.16.1"
+
+[profile.release]
+codegen-units = 1
+opt-level = "s"
+debug = false
+strip = true
+lto = true
+
+[package.metadata.component]
+package = "component:wasi-nn-example"
+
+[package.metadata.component.dependencies]

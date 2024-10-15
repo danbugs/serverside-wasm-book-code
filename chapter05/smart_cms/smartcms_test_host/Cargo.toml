@@ -1,0 +1,9 @@
+[package]
+name = "smartcms_test_host_chapter05"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+wasmtime = "25.0.2"
+wasmtime-wasi = "25.0.2"
+wasmtime-wasi-nn = { version = "25.0.2", features = ["onnx"] }
