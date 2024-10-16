@@ -1,0 +1,6 @@
+package component:smartcms-ml-guest;
+
+world example {
+    include wasi:nn/ml@0.2.0-rc-2024-08-19;
+    export storygen: func() -> string;
+}

@@ -9,5 +9,10 @@ members = [
     "chapter04/wasi02/wasi02_lib",
     "chapter04/composability/composability_bin",
     "chapter04/composability/composability_lib",
-    "chapter04/smart_cms/smartcms_test_host", "chapter04/smart_cms/smartcms_ml_guest",
+    "chapter04/smart_cms/smartcms_test_host",
+    "chapter04/smart_cms/smartcms_ml_guest",
+    "chapter05/wasi_nn_example",
+    "chapter05/wasm_udf_example",
+    "chapter05/smart_cms/smartcms_test_host",
+    "chapter05/smart_cms/smartcms_ml_guest",
 ]

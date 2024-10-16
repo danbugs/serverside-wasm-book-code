@@ -7,7 +7,7 @@ struct KeyValue {
     mem: std::collections::HashMap<String, String>,
 }
 
-impl crate::component::smartcms::kvstore::Host for KeyValue {
+impl component::smartcms::kvstore::Host for KeyValue {
     fn get(&mut self, key: String) -> Option<String> {
         self.mem.get(&key).cloned()
     }
