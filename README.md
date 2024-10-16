@@ -1,6 +1,6 @@
-# Server-side WebAssembly: Building and Deploying Lightweight Apps
+# Server-side WebAssembly: Lightweight Apps with Wasm
 
-This is a repository to store the code used in my upcoming book: "Server-side WebAssembly: Building and Deploying Lightweight Apps".
+This is a repository to store the code used in my upcoming book: "Server-side WebAssembly: Lightweight Apps with Wasm".
 
 The book is still under development, so this repository will be updated as I progress through the book.
 
@@ -12,13 +12,12 @@ The book is still under development, so this repository will be updated as I pro
     - [x] Chapter 3 (Enhancing Portability and Security with Wasm Components)
     - [x] Chapter 4 (Interfacing Wasm with the Underlying System)
 - Part 2: Production-Grade Wasm
-    - [ ] Chapter 5 (Interfacing Wasm with the Cloud)
+    - [x] Chapter 5 (Applications of Wasm from machine learning to databases)
     - [ ] Chapter 6 (Creating Production-Grade Wasm Applications)
-    - [ ] Chapter 7 (Enhancing Machine Learning with Wasm)
 - Part 3: Wasm on the Cloud and the Edge
-    - [ ] Chapter 8 (Introducing Wasm Containers with Docker)
-    - [ ] Chapter 9 (Scalability for Wasm with Kubernetes)
-    - [ ] Chapter 10 (Wasm for Edge Devices and IoT)
+    - [ ] Chapter 7 (Introducing Wasm Containers with Docker)
+    - [ ] Chapter 8 (Scalability for Wasm with Kubernetes)
+    - [ ] Chapter 9 (Wasm for Edge Devices and IoT)
 
 ## Platform Used
 
