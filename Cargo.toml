@@ -13,7 +13,6 @@ members = [
     "chapter04/smart_cms/smartcms_ml_guest",
     "chapter05/wasi_nn_example",
     "chapter05/wasm_udf_example",
-    "chapter05/wasi_nn_example_2",
     "chapter05/smart_cms/smartcms_test_host",
     "chapter05/smart_cms/smartcms_ml_guest",
 ]

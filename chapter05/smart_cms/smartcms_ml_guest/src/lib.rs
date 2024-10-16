@@ -1,18 +1,15 @@
-use tokenizers::Tokenizer;
-use rand::prelude::*;
-use ndarray::Array;
-use std::fs;
-
 #[allow(warnings)]
 mod bindings;
 
-use crate::bindings::wasi::nn::{
+use tokenizers::Tokenizer;
+use rand::prelude::*;
+use ndarray::Array;
+use std::{convert::TryInto, fs};
+
+use bindings::{Guest, wasi::nn::{
     graph::{Graph, load, ExecutionTarget, GraphEncoding},
     tensor::{Tensor, TensorType},
-};
-
-use std::convert::TryInto;
-use bindings::Guest;
+}};
 
 struct Component;
 
@@ -66,7 +63,6 @@ impl Guest for Component {
             // Sample the next token
             let dist = rand::distributions::WeightedIndex::new(&probabilities).unwrap();
             let next_token = dist.sample(&mut rng);
-
             input_ids.push(next_token as u32);
 
             // Decode the current text
