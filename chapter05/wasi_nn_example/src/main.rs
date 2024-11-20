@@ -45,7 +45,7 @@ fn main() {
     let softmax_output = exp_output / sum_exp;
 
     // Get top 3 predictions
-    let mut probabilities = softmax_output.iter().enumerate().collect::<Vec<_>>();
+    let mut probabilities: Vec<_> = softmax_output.iter().enumerate().collect();
     probabilities.sort_by(|a, b| b.1.partial_cmp(a.1).unwrap());
 
     for &(index, &probability) in probabilities.iter().take(3) {

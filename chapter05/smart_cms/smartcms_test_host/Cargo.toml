@@ -7,3 +7,5 @@ edition = "2021"
 wasmtime = "25.0.2"
 wasmtime-wasi = "25.0.2"
 wasmtime-wasi-nn = { version = "25.0.2", features = ["onnx"] }
+ort = { version = "=2.0.0-rc.6", default-features = false, features = ["copy-dylibs", "download-binaries"] }
+
