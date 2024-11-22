@@ -4,7 +4,7 @@ mod bindings;
 use tokenizers::Tokenizer;
 use rand::prelude::*;
 use ndarray::Array;
-use std::{convert::TryInto, fs};
+use std::fs;
 
 use bindings::{Guest, wasi::nn::{
     graph::{Graph, load, ExecutionTarget, GraphEncoding},
