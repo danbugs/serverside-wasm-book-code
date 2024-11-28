@@ -1,0 +1,55 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: rust-hello-world
+  annotations:
+    description: 'HTTP hello world demo in Rust, using the WebAssembly Component Model and WebAssembly Interfaces Types (WIT)'
+    wasmcloud.dev/authors: wasmCloud team
+    wasmcloud.dev/source-url: https://github.com/wasmCloud/wasmCloud/blob/main/examples/rust/components/http-hello-world/wadm.yaml
+    wasmcloud.dev/readme-md-url: https://github.com/wasmCloud/wasmCloud/blob/main/examples/rust/components/http-hello-world/README.md
+    wasmcloud.dev/homepage: https://github.com/wasmCloud/wasmCloud/tree/main/examples/rust/components/http-hello-world
+    wasmcloud.dev/categories: |
+      http,http-server,rust,hello-world,example
+spec:
+  components:
+    - name: http-component
+      type: component
+      properties:
+        image: file://./build/http_hello_world_s.wasm
+      traits:
+        - type: spreadscaler
+          properties:
+            instances: 1
+        - type: link
+          properties:
+            namespace: wasi
+            package: keyvalue
+            interfaces: [store, atomics]
+            target:
+              name: kvnats
+              config:
+                - name: wasi-keyvalue-config
+                  properties:
+                    bucket: default
+                    enable_bucket_auto_create: 'true'
+
+    - name: kvnats
+      type: capability
+      properties:
+        image: ghcr.io/wasmcloud/keyvalue-nats:0.3.1
+
+    - name: httpserver
+      type: capability
+      properties:
+        image: ghcr.io/wasmcloud/http-server:0.23.2
+      traits:
+        - type: link
+          properties:
+            target: http-component
+            namespace: wasi
+            package: http
+            interfaces: [incoming-handler]
+            source_config:
+              - name: wasi-http-config
+                properties:
+                  address: 127.0.0.1:8000
