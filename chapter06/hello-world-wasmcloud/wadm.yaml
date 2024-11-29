@@ -20,6 +20,15 @@ spec:
         - type: spreadscaler
           properties:
             instances: 10
+            spread:
+              - name: eastcoast
+                weight: 80
+                requirements:
+                  zone: us-east-1
+              - name: westcoast
+                weight: 20
+                requirements:
+                  zone: us-west-1
         - type: link
           properties:
             namespace: wasi
