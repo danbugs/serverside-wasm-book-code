@@ -17,4 +17,5 @@ members = [
     "chapter05/smart_cms/smartcms_ml_guest",
     "chapter06/hello-world-spin",
     "chapter06/hello-world-wasmcloud",
+    "chapter06/smart-cms",
 ]

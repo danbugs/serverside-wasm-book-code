@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart CMS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        input, button, textarea {
+            margin: 10px 0;
+            padding: 8px;
+            width: 100%;
+            max-width: 500px;
+            font-size: 16px;
+        }
+        button {
+            cursor: pointer;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #f9f9f9;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<h1>Smart CMS</h1>
+
+<h2>Create a Story</h2>
+<input id="create-title" type="text" placeholder="Story Title">
+<textarea id="create-content" placeholder="Story Content"></textarea>
+<button onclick="createStory()">Create Story</button>
+
+<h2>Get a Story</h2>
+<input id="get-title" type="text" placeholder="Story Title">
+<button onclick="getStory()">Get Story</button>
+
+<h2>Generate a Story</h2>
+<button onclick="generateStory()">Generate Story</button>
+
+<div id="output" class="output"></div>
+
+<script>
+    const API_BASE = 'http://127.0.0.1:8000';
+
+    async function createStory() {
+        const title = document.getElementById('create-title').value;
+        const content = document.getElementById('create-content').value;
+
+        if (!title || !content) {
+            showOutput('Please enter both a title and content.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE}/create`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `story_name=${encodeURIComponent(title)}&story_content=${encodeURIComponent(content)}`
+            });
+
+            const result = await response.text();
+            showOutput(result || 'Story created successfully.');
+        } catch (err) {
+            showOutput('Error creating story.');
+        }
+    }
+
+    async function getStory() {
+        const title = document.getElementById('get-title').value;
+
+        if (!title) {
+            showOutput('Please enter a title.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE}/retrieve`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `story_name=${encodeURIComponent(title)}`
+            });
+
+            if (!response.ok) {
+                showOutput('Story not found.');
+                return;
+            }
+
+            const result = await response.text();
+            showOutput(result || 'No content available.');
+        } catch (err) {
+            showOutput('Error retrieving story.');
+        }
+    }
+
+    async function generateStory() {
+        try {
+            const response = await fetch(`${API_BASE}/generate`, {
+                method: 'POST'
+            });
+
+            const result = await response.text();
+            showOutput(result || 'Generated story.');
+        } catch (err) {
+            showOutput('Error generating story.');
+        }
+    }
+
+    function showOutput(message) {
+        const output = document.getElementById('output');
+        output.textContent = message;
+        output.style.display = 'block';
+    }
+</script>
+</body>
+</html>

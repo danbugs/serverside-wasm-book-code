@@ -1,0 +1,7 @@
+package smartcms:store-and-ai-story-generator;
+
+world backend {
+    import wasi:keyvalue/atomics@0.2.0-draft;
+    import wasi:keyvalue/store@0.2.0-draft;
+    export wasi:http/incoming-handler@0.2.2;
+}
