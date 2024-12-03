@@ -1,0 +1,73 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: smart-cms
+  annotations:
+    description: "A smart CMS!"
+spec:
+  components:
+    - name: http-component
+      type: component
+      properties:
+        image: file://./build/smart_cms_s.wasm
+      traits:
+        - type: spreadscaler
+          properties:
+            instances: 100
+            spread:
+              - name: eastcoast
+                weight: 80
+                requirements:
+                  zone: us-east-1
+              - name: westcoast
+                weight: 20
+                requirements:
+                  zone: us-west-1
+        - type: link
+          properties:
+            namespace: wasi
+            package: keyvalue
+            interfaces: [store, atomics]
+            target:
+              name: kvnats
+              config:
+                - name: wasi-keyvalue-config
+                  properties:
+                    bucket: default
+                    enable_bucket_auto_create: 'true'
+        - type: link
+          properties:
+            target: ollama
+            namespace: thomastaylor312
+            package: ollama
+            interfaces: [generate]
+            target_config:
+              - name: ollama-conf
+                properties:
+                  model_name: gurubot/tinystories-656k-q8
+
+    - name: httpserver
+      type: capability
+      properties:
+        image: ghcr.io/wasmcloud/http-server:0.23.2
+      traits:
+        - type: link
+          properties:
+            target: http-component
+            namespace: wasi
+            package: http
+            interfaces: [incoming-handler]
+            source_config:
+              - name: default-http
+                properties:
+                  address: 127.0.0.1:8000
+
+    - name: kvnats
+      type: capability
+      properties:
+        image: ghcr.io/wasmcloud/keyvalue-nats:0.3.1
+
+    - name: ollama
+      type: capability
+      properties:
+        image: file://./ollama-provider/build/ollama-provider.par.gz
