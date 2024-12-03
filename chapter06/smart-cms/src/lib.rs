@@ -2,6 +2,9 @@ use std::io::Read;
 use wasmcloud_component::http;
 use wasmcloud_component::wasi::keyvalue::*;
 
+wit_bindgen::generate!({ generate_all });
+use thomastaylor312::ollama::generate::{generate, Request};
+
 struct Component;
 
 http::export!(Component);
@@ -11,59 +14,54 @@ impl http::Server for Component {
         request: http::IncomingRequest,
     ) -> http::Result<http::Response<impl http::OutgoingBody>> {
         let (parts, mut body) = request.into_parts();
-        // match on route (/create, /retrieve, return error message otherwise)
+
         match parts.uri.path() {
             "/create" => {
                 let bucket = store::open("default").unwrap();
 
-                // Read the body of the request into a string
                 let mut buf = Vec::new();
                 body.read_to_end(&mut buf).unwrap();
                 let body = String::from_utf8(buf).unwrap();
 
-                // Parse the body for `story_name` and `story_content`
-                let mut story_name = None;
-                let mut story_content = None;
+                let mut lines = body.lines();
+                let story_name = lines.next().unwrap_or("Unnamed Story").trim();
+                let story_content = lines.collect::<Vec<&str>>().join("\n");
 
-                for part in body.split('&') {
-                    if let Some((key, value)) = part.split_once('=') {
-                        match key {
-                            "story_name" => story_name = Some(value),
-                            "story_content" => story_content = Some(value),
-                            _ => {} // Ignore unknown keys
-                        }
-                    }
-                }
+                bucket.set(story_name, story_content.as_bytes()).unwrap();
 
-                // Store the story name and content in the key-value store
-                bucket.set(story_name.unwrap(), story_content.unwrap().as_bytes()).unwrap();
-
-                // Return the story name and content
-                Ok(http::Response::new(format!("Stored {}", story_name.unwrap())))
+                Ok(http::Response::new(format!("Stored {}\n", story_name)))
             }
             "/retrieve" => {
                 let bucket = store::open("default").unwrap();
 
-                // Read the body of the request into a string
                 let mut buf = Vec::new();
                 body.read_to_end(&mut buf).unwrap();
-                let body = String::from_utf8(buf).unwrap();
+                let story_name = String::from_utf8(buf).unwrap().trim().to_string();
 
-                // Parse the body for `story_name`
-                let mut story_name = None;
-                for part in body.split('&') {
-                    if let Some((key, value)) = part.split_once('=') {
-                        match key {
-                            "story_name" => story_name = Some(value),
-                            _ => {} // Ignore unknown keys
-                        }
+                match bucket.get(&story_name).unwrap() {
+                    Some(content) => {
+                        let story_content = String::from_utf8(content).unwrap();
+                        Ok(http::Response::new(format!("{story_content}\n")))
+                    }
+                    None => {
+                        Ok(http::Response::new("Story not found\n".to_string()))
                     }
                 }
+            }
+            "/generate" => {
+                let prompt = "Once upon a time".to_string();
+                let generated_story = generate(&Request {
+                    prompt: prompt.clone(),
+                    images: None,
+                }).unwrap();
+                let story = format!("{}{}", prompt, generated_story.response);
 
-                // Retrieve the story content from the key-value store
-                let story_content = bucket.get(story_name.unwrap()).unwrap().unwrap();
+                let bucket = store::open("default").unwrap();
+                let count = atomics::increment(&bucket, "counter", 1).unwrap();
+                let story_name = format!("generated{}", count);
+                bucket.set(&story_name, story.clone().as_bytes()).unwrap();
 
-                Ok(http::Response::new(format!("{}", String::from_utf8(story_content).unwrap())))
+                Ok(http::Response::new(format!("{}\n{}\n", story_name, story)))
             }
             _ => {
                 Ok(http::Response::new("Invalid route!\n".to_string()))

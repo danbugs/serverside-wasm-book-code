@@ -1,7 +1,7 @@
 apiVersion: core.oam.dev/v1beta1
 kind: Application
 metadata:
-  name: smart_cms
+  name: smart-cms
   annotations:
     description: "A smart CMS!"
 spec:
@@ -9,7 +9,7 @@ spec:
     - name: http-component
       type: component
       properties:
-        image: file://./build/http_hello_world_s.wasm
+        image: file://./build/smart_cms_s.wasm
       traits:
         - type: spreadscaler
           properties:
@@ -35,6 +35,16 @@ spec:
                   properties:
                     bucket: default
                     enable_bucket_auto_create: 'true'
+        - type: link
+          properties:
+            target: ollama
+            namespace: thomastaylor312
+            package: ollama
+            interfaces: [generate]
+            target_config:
+              - name: ollama-conf
+                properties:
+                  model_name: gurubot/tinystories-656k-q8
 
     - name: httpserver
       type: capability
@@ -56,3 +66,8 @@ spec:
       type: capability
       properties:
         image: ghcr.io/wasmcloud/keyvalue-nats:0.3.1
+
+    - name: ollama
+      type: capability
+      properties:
+        image: file://./ollama-provider/build/ollama-provider.par.gz

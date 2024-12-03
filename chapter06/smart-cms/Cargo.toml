@@ -1,5 +1,5 @@
 [package]
-name = "http-hello-world"
+name = "smart-cms"
 edition = "2021"
 version = "0.1.0"
 
@@ -10,3 +10,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 wasmcloud-component = "0.2.0"
+wit-bindgen = "0.36.0"

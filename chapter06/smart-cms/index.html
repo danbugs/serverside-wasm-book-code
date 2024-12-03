@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart CMS</title>
     <style>
         body {
@@ -27,6 +26,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             background: #f9f9f9;
+            white-space: pre-wrap;
             display: none;
         }
     </style>
@@ -35,11 +35,13 @@
 <h1>Smart CMS</h1>
 
 <h2>Create a Story</h2>
+<p><em>Note: Story titles cannot contain spaces.</em></p>
 <input id="create-title" type="text" placeholder="Story Title">
 <textarea id="create-content" placeholder="Story Content"></textarea>
 <button onclick="createStory()">Create Story</button>
 
 <h2>Get a Story</h2>
+<p><em>Note: Story titles cannot contain spaces.</em></p>
 <input id="get-title" type="text" placeholder="Story Title">
 <button onclick="getStory()">Get Story</button>
 
@@ -52,19 +54,28 @@
     const API_BASE = 'http://127.0.0.1:8000';
 
     async function createStory() {
-        const title = document.getElementById('create-title').value;
-        const content = document.getElementById('create-content').value;
+        let title = document.getElementById('create-title').value.trim();
+        let content = document.getElementById('create-content').value;
+
+        // Check for spaces in the title
+        if (title.includes(' ')) {
+            showOutput('Error: The story title cannot contain spaces.');
+            return;
+        }
 
         if (!title || !content) {
             showOutput('Please enter both a title and content.');
             return;
         }
 
+        // Combine title and content with a newline separator
+        const body = `${title}\n${content}`;
+
         try {
             const response = await fetch(`${API_BASE}/create`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `story_name=${encodeURIComponent(title)}&story_content=${encodeURIComponent(content)}`
+                headers: { 'Content-Type': 'text/plain' },
+                body: body
             });
 
             const result = await response.text();
@@ -75,7 +86,13 @@
     }
 
     async function getStory() {
-        const title = document.getElementById('get-title').value;
+        let title = document.getElementById('get-title').value.trim();
+
+        // Check for spaces in the title
+        if (title.includes(' ')) {
+            showOutput('Error: The story title cannot contain spaces.');
+            return;
+        }
 
         if (!title) {
             showOutput('Please enter a title.');
@@ -85,17 +102,18 @@
         try {
             const response = await fetch(`${API_BASE}/retrieve`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `story_name=${encodeURIComponent(title)}`
+                headers: { 'Content-Type': 'text/plain' },
+                body: title
             });
 
-            if (!response.ok) {
-                showOutput('Story not found.');
+            const result = await response.text();
+
+            if (result === 'Story not found') {
+                showOutput(result);
                 return;
             }
 
-            const result = await response.text();
-            showOutput(result || 'No content available.');
+            showOutput(`Title: ${title}\n\n${result}`);
         } catch (err) {
             showOutput('Error retrieving story.');
         }
@@ -104,11 +122,17 @@
     async function generateStory() {
         try {
             const response = await fetch(`${API_BASE}/generate`, {
-                method: 'POST'
+                method: 'GET',
             });
 
             const result = await response.text();
-            showOutput(result || 'Generated story.');
+
+            // Split the result into lines
+            const lines = result.split('\n');
+            const title = lines[0];
+            const content = lines.slice(1).join('\n');
+
+            showOutput(`Title: ${title}\n\n${content}`);
         } catch (err) {
             showOutput('Error generating story.');
         }

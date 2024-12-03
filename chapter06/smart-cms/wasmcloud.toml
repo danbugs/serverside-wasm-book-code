@@ -1,8 +1,11 @@
-name = "http-hello-world"
+name = "smart-cms"
 version = "0.1.0"
 language = "rust"
 type = "component"
 
 [component]
-wit_world = "hello"
+wit_world = "backend"
 wasm_target = "wasm32-wasip2"
+
+[overrides]
+"thomastaylor312:ollama" = { path = "./ollama-provider/wit/" }

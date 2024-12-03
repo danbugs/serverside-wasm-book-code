@@ -1,0 +1,37 @@
+package thomastaylor312:ollama;
+
+/// A representation of the ollama generate API endpoint
+interface generate {
+  record request {
+    /// Model is specifically excluded here as it should be defined by the host. It will be returned in the response
+    prompt: string,
+    images: option<list<string>>,
+  }
+
+  record response {
+    model: string,
+    created-at: string,
+    response: string,
+    done: bool,
+    context: option<list<s32>>,
+    total-duration: option<u64>,
+    load-duration: option<u64>,
+    prompt-eval-count: option<u16>,
+    prompt-eval-duration: option<u64>,
+    eval-count: option<u16>,
+    eval-duration: option<u64>,
+  }
+
+  /// TODO(thomastaylor312): This is what I want to do but we don't have resources support quite yet for custom interfaces
+  /// resource response-stream {
+    /// next: func() -> result<response, string>;
+    /// }
+  /// generate: func(req: request) -> result<response-stream, string>;
+  /// Requests a response for the given prompt. Please note that this will possibly take a while
+  /// so set your timeouts high
+  generate: func(req: request) -> result<response, string>;
+}
+
+world provider-ollama {
+  export generate;
+}
