@@ -6,13 +6,13 @@ The book is still under development, so this repository will be updated as I pro
 
 ## Book Sections
 
-- Part 1: Demystifying Server-Side Wasm
+- Part 1: WebAssembly for architects
     - [x] Chapter 1 (Introduction to Wasm on the Server)
     - [x] Chapter 2 (Building Server-Side Applications with Wasm Modules)
     - [x] Chapter 3 (Enhancing Portability and Security with Wasm Components)
     - [x] Chapter 4 (Interfacing Wasm with the Underlying System)
-- Part 2: Production-Grade Wasm
     - [x] Chapter 5 (Applications of Wasm from machine learning to databases)
+- Part 2: WebAssembly for developers
     - [x] Chapter 6 (Creating Production-Grade Wasm Applications)
 - Part 3: Wasm on the Cloud and the Edge
     - [ ] Chapter 7 (Introducing Wasm Containers with Docker)
