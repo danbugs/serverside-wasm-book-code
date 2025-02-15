@@ -15,7 +15,8 @@ members = [
     "chapter05/wasm_udf_example",
     "chapter05/smart_cms/smartcms_test_host",
     "chapter05/smart_cms/smartcms_ml_guest",
-    "chapter06/hello-world-spin",
-    "chapter06/hello-world-wasmcloud",
-    "chapter06/smart-cms",
+     "chapter06/hello-world-spin",
+     "chapter06/hello-world-wasmcloud",
+     "chapter06/smart-cms",
+    "chapter07/hello-wasm-container",
 ]
