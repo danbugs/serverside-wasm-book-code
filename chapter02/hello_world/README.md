@@ -1,12 +1,12 @@
-# `hello_world/hello_world_guest`
+# `hello_world/`
 
-## How to build?
+## How to build the guest?
 
 ```bash
 cargo build --target wasm32-unknown-unknown --release
 ```
 
-## How to run?
+## How to run the host?
 
 ```bash
 docker run --rm -v <absolute-path-to-the-directory-containing-the-wasm-module>:/data danstaken/hello_world_host:latest /data/hello_world_guest.wasm 'Dan'
