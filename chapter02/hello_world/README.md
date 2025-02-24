@@ -10,6 +10,7 @@ cargo build --target wasm32-unknown-unknown --release
 ## How to run the host?
 
 ```bash
+# from the `hello_world_guest/` directory
 docker run --rm -v "$(pwd):/data" danstaken/hello_world_host:latest  /data/hello_world_guest.wasm 'Dan'
 ```
 
