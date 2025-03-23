@@ -14,5 +14,5 @@ python main.py
 ## Toolchain versions
 
 ```bash
-Python 3.12.1
+Python 3.12.3
 ```

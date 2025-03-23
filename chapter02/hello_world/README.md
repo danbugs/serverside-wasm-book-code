@@ -20,3 +20,9 @@ You can also run locally, with:
 # from the `hello_world_host/` directory
 cargo run -- ../hello_world_guest/hello_world_guest.wasm 'Dan'
 ```
+
+## Toolchain versions
+
+```bash
+rustc 1.85.0 (4d91de4e4 2025-02-17)
+```

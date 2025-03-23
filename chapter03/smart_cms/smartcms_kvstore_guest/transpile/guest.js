@@ -9,7 +9,7 @@ const isNode = typeof process !== 'undefined' && process.versions && process.ver
 let _fs;
 async function fetchCompile (url) {
   if (isNode) {
-    _fs = _fs || await import('fs/promises');
+    _fs = _fs || await import('node:fs/promises');
     return WebAssembly.compile(await _fs.readFile(url));
   }
   return fetch(url).then(WebAssembly.compileStreaming);
@@ -28,19 +28,10 @@ function utf8Encode(s, realloc, memory) {
     utf8EncodedLen = 0;
     return 1;
   }
-  let allocLen = 0;
-  let ptr = 0;
-  let writtenTotal = 0;
-  while (s.length > 0) {
-    ptr = realloc(ptr, allocLen, 1, allocLen += s.length * 2);
-    const { read, written } = utf8Encoder.encodeInto(
-    s,
-    new Uint8Array(memory.buffer, ptr + writtenTotal, allocLen - writtenTotal),
-    );
-    writtenTotal += written;
-    s = s.slice(read);
-  }
-  utf8EncodedLen = writtenTotal;
+  let buf = utf8Encoder.encode(s);
+  let ptr = realloc(0, 0, 1, buf.length);
+  new Uint8Array(memory.buffer).set(buf, ptr);
+  utf8EncodedLen = buf.length;
   return ptr;
 }
 
@@ -68,6 +59,7 @@ function trampoline0(arg0, arg1, arg2) {
   }
 }
 
+
 function trampoline1(arg0, arg1, arg2, arg3) {
   var ptr0 = arg0;
   var len0 = arg1;
@@ -77,39 +69,66 @@ function trampoline1(arg0, arg1, arg2, arg3) {
   var result1 = utf8Decoder.decode(new Uint8Array(memory0.buffer, ptr1, len1));
   set(result0, result1);
 }
+
 let exports2;
 let postReturn0;
+let exports1Run;
 
 function run() {
-  const ret = exports1.run();
+  const ret = exports1Run();
   var ptr0 = dataView(memory0).getInt32(ret + 0, true);
   var len0 = dataView(memory0).getInt32(ret + 4, true);
   var result0 = utf8Decoder.decode(new Uint8Array(memory0.buffer, ptr0, len0));
+  const retVal = result0;
   postReturn0(ret);
-  return result0;
+  return retVal;
 }
 
-const $init = (async() => {
-  const module0 = fetchCompile(new URL('./guest.core.wasm', import.meta.url));
-  const module1 = base64Compile('AGFzbQEAAAABDgJgA39/fwBgBH9/f38AAwMCAAEEBQFwAQICBxQDATAAAAExAAEIJGltcG9ydHMBAAofAg0AIAAgASACQQARAAALDwAgACABIAIgA0EBEQEACwAuCXByb2R1Y2VycwEMcHJvY2Vzc2VkLWJ5AQ13aXQtY29tcG9uZW50BjAuMjEuMABvBG5hbWUAExJ3aXQtY29tcG9uZW50OnNoaW0BUwIAJ2luZGlyZWN0LWNvbXBvbmVudDpzbWFydGNtcy9rdnN0b3JlLWdldAEnaW5kaXJlY3QtY29tcG9uZW50OnNtYXJ0Y21zL2t2c3RvcmUtc2V0');
-  const module2 = base64Compile('AGFzbQEAAAABDgJgA39/fwBgBH9/f38AAhoDAAEwAAAAATEAAQAIJGltcG9ydHMBcAECAgkIAQBBAAsCAAEALglwcm9kdWNlcnMBDHByb2Nlc3NlZC1ieQENd2l0LWNvbXBvbmVudAYwLjIxLjAAHARuYW1lABUUd2l0LWNvbXBvbmVudDpmaXh1cHM');
-  ({ exports: exports0 } = await instantiateCore(await module1));
-  ({ exports: exports1 } = await instantiateCore(await module0, {
-    'component:smartcms/kvstore': {
-      get: exports0['0'],
-      set: exports0['1'],
-    },
-  }));
-  memory0 = exports1.memory;
-  realloc0 = exports1.cabi_realloc;
-  ({ exports: exports2 } = await instantiateCore(await module2, {
-    '': {
-      $imports: exports0.$imports,
-      '0': trampoline0,
-      '1': trampoline1,
-    },
-  }));
-  postReturn0 = exports1.cabi_post_run;
+const $init = (() => {
+  let gen = (function* init () {
+    const module0 = fetchCompile(new URL('./guest.core.wasm', import.meta.url));
+    const module1 = base64Compile('AGFzbQEAAAABDgJgA39/fwBgBH9/f38AAwMCAAEEBQFwAQICBxQDATAAAAExAAEIJGltcG9ydHMBAAofAg0AIAAgASACQQARAAALDwAgACABIAIgA0EBEQEACwAvCXByb2R1Y2VycwEMcHJvY2Vzc2VkLWJ5AQ13aXQtY29tcG9uZW50BzAuMjI1LjAAbwRuYW1lABMSd2l0LWNvbXBvbmVudDpzaGltAVMCACdpbmRpcmVjdC1jb21wb25lbnQ6c21hcnRjbXMva3ZzdG9yZS1nZXQBJ2luZGlyZWN0LWNvbXBvbmVudDpzbWFydGNtcy9rdnN0b3JlLXNldA');
+    const module2 = base64Compile('AGFzbQEAAAABDgJgA39/fwBgBH9/f38AAhoDAAEwAAAAATEAAQAIJGltcG9ydHMBcAECAgkIAQBBAAsCAAEALwlwcm9kdWNlcnMBDHByb2Nlc3NlZC1ieQENd2l0LWNvbXBvbmVudAcwLjIyNS4wABwEbmFtZQAVFHdpdC1jb21wb25lbnQ6Zml4dXBz');
+    ({ exports: exports0 } = yield instantiateCore(yield module1));
+    ({ exports: exports1 } = yield instantiateCore(yield module0, {
+      'component:smartcms/kvstore': {
+        get: exports0['0'],
+        set: exports0['1'],
+      },
+    }));
+    memory0 = exports1.memory;
+    realloc0 = exports1.cabi_realloc;
+    ({ exports: exports2 } = yield instantiateCore(yield module2, {
+      '': {
+        $imports: exports0.$imports,
+        '0': trampoline0,
+        '1': trampoline1,
+      },
+    }));
+    postReturn0 = exports1.cabi_post_run;
+    exports1Run = exports1.run;
+  })();
+  let promise, resolve, reject;
+  function runNext (value) {
+    try {
+      let done;
+      do {
+        ({ value, done } = gen.next(value));
+      } while (!(value instanceof Promise) && !done);
+      if (done) {
+        if (resolve) resolve(value);
+        else return value;
+      }
+      if (!promise) promise = new Promise((_resolve, _reject) => (resolve = _resolve, reject = _reject));
+      value.then(runNext, reject);
+    }
+    catch (e) {
+      if (reject) reject(e);
+      else throw e;
+    }
+  }
+  const maybeSyncReturn = runNext(null);
+  return promise || maybeSyncReturn;
 })();
 
 await $init;

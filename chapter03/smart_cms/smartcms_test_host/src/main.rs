@@ -34,7 +34,7 @@ fn main() {
     let mut linker = wasmtime::component::Linker::new(&engine);
     component::smartcms::kvstore::add_to_linker(&mut linker, |state: &mut State| &mut state.key_value).unwrap();
 
-    let (instance, _) = App::instantiate(&mut store, &component, &linker).unwrap();
+    let app = App::instantiate(&mut store, &component, &linker).unwrap();
 
-    println!("{:?}", instance.call_run(&mut store).unwrap());
+    println!("{:?}", app.call_run(&mut store).unwrap());
 }
