@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-wit-bindgen-rt = { version = "0.28.0", features = ["bitflags"] }
+wit-bindgen-rt = { version = "0.41.0", features = ["bitflags"] }
 
 [lib]
 crate-type = ["cdylib"]
@@ -19,8 +19,8 @@ lto = true
 [package.metadata.component]
 package = "composability:lib"
 
+[package.metadata.component.dependencies]
+
 [package.metadata.component.target]
 path = "../wit/lib.wit"
 world = "lib"
-
-[package.metadata.component.dependencies]

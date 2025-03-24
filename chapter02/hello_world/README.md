@@ -11,7 +11,7 @@ cargo build --target wasm32-unknown-unknown --release
 
 ```bash
 # from the `hello_world_guest/` directory
-docker run --rm -v "$(pwd):/data" danstaken/hello_world_host:latest  /data/hello_world_guest.wasm 'Dan'
+docker run --rm -v "$(pwd):/data" ghcr.io/danbugs/serverside-wasm-book-code/hello-world-host:latest  /data/hello_world_guest.wasm 'Dan' 
 ```
 
 You can also run locally, with:
@@ -24,5 +24,5 @@ cargo run -- ../hello_world_guest/hello_world_guest.wasm 'Dan'
 ## Toolchain versions
 
 ```bash
-rustc 1.85.0 (4d91de4e4 2025-02-17)
+rustc 1.84.0 (9fc6b4312 2025-01-07)
 ```

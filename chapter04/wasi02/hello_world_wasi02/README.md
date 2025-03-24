@@ -17,7 +17,7 @@ Hello, world!
 
 ```bash
 cargo-component-component 0.14.0 (wasi:95fee6f)
-wasm-tools 1.214.0
-wasmtime-cli 24.0.0 (c549e7776 2024-07-27)
+wasm-tools 1.227.1
+wasmtime 30.0.0
 ```
 

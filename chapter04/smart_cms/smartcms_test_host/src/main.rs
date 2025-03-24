@@ -26,7 +26,9 @@ impl wasmtime_wasi::WasiView for State {
     fn ctx(&mut self) -> &mut wasmtime_wasi::WasiCtx {
         &mut self.wasi.0
     }
+}
 
+impl wasmtime_wasi::IoView for State {
     fn table(&mut self) -> &mut wasmtime_wasi::ResourceTable {
         &mut self.wasi.1
     }
@@ -52,9 +54,9 @@ fn main() {
 
     let mut linker = wasmtime::component::Linker::new(&engine);
     wasmtime_wasi::add_to_linker_sync(&mut linker).unwrap();
-    crate::component::smartcms::kvstore::add_to_linker(&mut linker, |state: &mut State| &mut state.key_value).unwrap();
+    component::smartcms::kvstore::add_to_linker(&mut linker, |state: &mut State| &mut state.key_value).unwrap();
 
-    let (instance, _) = App::instantiate(&mut store, &component, &linker).unwrap();
+    let app = App::instantiate(&mut store, &component, &linker).unwrap();
 
-    println!("{:?}", instance.call_run(&mut store).unwrap());
+    println!("{:?}", app.call_run(&mut store).unwrap());
 }

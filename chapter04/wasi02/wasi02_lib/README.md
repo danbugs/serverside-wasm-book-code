@@ -11,6 +11,3 @@ cargo component new --lib wasi02_lib
 ```bash
 cargo component build --release
 ```
-
-
-

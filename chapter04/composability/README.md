@@ -3,7 +3,7 @@
 ## How to compose two Wasm components together?
 
 ```bash
-wac plug <path-to>/composability_bin.wasm --plug <path-to>/composability_lib.wasm -o composability.wasm
+wac plug ../composability_bin.wasm --plug <path-to>/composability_lib.wasm -o composability.wasm
 ```
 
 ## How to run?

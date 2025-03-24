@@ -1,12 +1,11 @@
 #[allow(warnings)]
 mod bindings;
 
-use crate::bindings::Guest;
+use bindings::Guest;
 
 struct Component;
 
 impl Guest for Component {
-    /// Say hello!
     fn hello_world() -> String {
         "Hello from Lib!".to_string()
     }

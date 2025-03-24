@@ -12,10 +12,13 @@ impl wasmtime_wasi::WasiView for State {
     fn ctx(&mut self) -> &mut wasmtime_wasi::WasiCtx {
         &mut self.wasi
     }
+}
 
+impl wasmtime_wasi::IoView for State {
     fn table(&mut self) -> &mut wasmtime_wasi::ResourceTable {
         &mut self.table
     }
+
 }
 
 fn main() {
@@ -33,7 +36,7 @@ fn main() {
     let mut store = wasmtime::Store::new(&engine, State { wasi, table: wasmtime_wasi::ResourceTable::new() });
     let component = wasmtime::component::Component::from_file(&engine, "../hello_world_wasi_guest/greet.wasm").unwrap();
 
-    let (instance, _) = Example::instantiate(&mut store, &component, &linker).unwrap();
+    let app = Example::instantiate(&mut store, &component, &linker).unwrap();
 
-    instance.call_greet(&mut store, "World").unwrap();
+    app.call_greet(&mut store, "World").unwrap();
 }
