@@ -4,7 +4,7 @@
 - Create SQL file (see `data/create_wasm_udfs.sql` for reference). Leverage [`wasm_hex_dump`](https://github.com/danbugs/wasm_hex_dump) to generate the hex dump off a Wasm binary.
 - Run with:
 ```shell
-docker run --rm -v <absolute-path-to-the-directory-containing-the-wasm-module>:/data danstaken/libsql:libsql-0.1.0-wasm-udf 
+docker run --rm -v $(pwd)/data:/data -it danstaken/libsql:libsql-0.1.0-wasm-udf 
 ```
 
 # Aside: An example with WAT

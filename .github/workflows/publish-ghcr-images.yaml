@@ -37,3 +37,24 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Build and Push wasmtime_onnx
+        uses: docker/build-push-action@v5
+        with:
+          context: chapter05/wasmtime_onnx
+          file: chapter05/wasmtime_onnx/Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository }}/wasmtime-onnx:latest
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and Push libsql_wasmudf
+        uses: docker/build-push-action@v5
+        with:
+          context: chapter05/libsql_wasmudf
+          file: chapter05/libsql_wasmudf/Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository }}/libsql-wasmudf:latest
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
