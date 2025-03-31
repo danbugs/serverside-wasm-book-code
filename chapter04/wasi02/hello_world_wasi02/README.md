@@ -9,7 +9,7 @@ cargo component new --bin hello_world_wasi02
 ## How to run?
 
 ```bash
-wasmtime ..\..\target\wasm32-wasip1\release\hello_world_wasi02.wasm
+wasmtime ../../target/wasm32-wasip1/release/hello_world_wasi02.wasm
 Hello, world!
 ```
 

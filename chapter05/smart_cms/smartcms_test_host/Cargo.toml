@@ -4,8 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-wasmtime = "25.0.2"
-wasmtime-wasi = "25.0.2"
-wasmtime-wasi-nn = { version = "25.0.2", features = ["onnx"] }
+wasmtime = "30"
+wasmtime-wasi = "30"
+wasmtime-wasi-nn = { version = "30", features = ["onnx"] }
 ort = { version = "=2.0.0-rc.6", default-features = false, features = ["copy-dylibs", "download-binaries"] }
+ort-sys = { version = "=2.0.0-rc.6", default-features = false, features = ["copy-dylibs", "download-binaries"] }
 

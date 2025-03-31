@@ -15,5 +15,5 @@ wasmtime composability.wasm
 ## Toolchain Versions
 
 ```bash
-wac-cli 0.5.0
+wac-cli 0.6.1
 ```

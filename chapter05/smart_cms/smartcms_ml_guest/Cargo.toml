@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-wit-bindgen-rt = { version = "0.29.0", features = ["bitflags"] }
+wit-bindgen-rt = { version = "0.41.0", features = ["bitflags"] }
 rand = "0.8.5"
 tokenizers = { version = "0.20.1", default-features = false, features = ["unstable_wasm"] }
 ndarray = "0.16.1"

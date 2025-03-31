@@ -27,7 +27,9 @@ impl wasmtime_wasi::WasiView for State {
     fn ctx(&mut self) -> &mut wasmtime_wasi::WasiCtx {
         &mut self.wasi.0
     }
+}
 
+impl wasmtime_wasi::IoView for State {
     fn table(&mut self) -> &mut wasmtime_wasi::ResourceTable {
         &mut self.wasi.1
     }

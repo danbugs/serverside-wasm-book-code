@@ -3,7 +3,7 @@
 ## How to build?
 
 ```bash
-jco componentize guest.js --wit kvstore_guest.wit --world-name app -o ..\smartcms_test_host\guest.wasm --disable stdio random clocks http
+jco componentize guest.js --wit kvstore_guest.wit --world-name app -o ../smartcms_test_host/guest.wasm --disable stdio random clocks http
 ```
 
 ## How to run?
