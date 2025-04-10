@@ -1,0 +1,3 @@
+[submodule "chapter06/smart-cms/ollama-provider"]
+	path = chapter06/smart-cms/ollama-provider
+	url = https://github.com/danbugs/ollama-provider.git
