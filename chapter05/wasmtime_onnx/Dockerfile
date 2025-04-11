@@ -1,5 +1,4 @@
-# Use the latest Rust image as the builder
-FROM rust:latest AS builder
+FROM rust:1.84.0 AS builder
 
 # Install necessary dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \

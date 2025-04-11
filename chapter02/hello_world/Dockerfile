@@ -1,4 +1,4 @@
-FROM rust:latest AS builder
+FROM rust:1.84.0 AS builder
 
 RUN USER=root cargo new --bin hello_world_host
 WORKDIR /hello_world_host
