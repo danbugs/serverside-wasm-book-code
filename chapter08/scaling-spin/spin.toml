@@ -1,0 +1,18 @@
+spin_manifest_version = 2
+
+[application]
+authors = ["danbugs <danilochiarlone@gmail.com>"]
+description = ""
+name = "scaling-spin"
+version = "0.1.0"
+
+[[trigger.http]]
+route = "/..."
+component = "scaling-spin"
+
+[component.scaling-spin]
+source = "dist/scaling-spin.wasm"
+exclude_files = ["**/node_modules"]
+[component.scaling-spin.build]
+command = ["npm install", "npm run build"]
+watch = ["src/**/*.js"]
