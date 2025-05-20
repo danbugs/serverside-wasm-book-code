@@ -1,0 +1,8 @@
+apiVersion: k8s.wasmcloud.dev/v1alpha1
+kind: WasmCloudHostConfig
+metadata:
+  name: wasmcloud-host
+spec:
+  lattice: default
+  version: "1.4.1"
+  hostReplicas: 2

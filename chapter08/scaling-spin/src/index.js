@@ -9,6 +9,15 @@ let router = AutoRouter();
 router
     .get("/", () => new Response("hello universe"))
     .get('/hello/:name', ({ name }) => `Hello, ${name}!`)
+    .get("/load", () => {
+        function fib(n) {
+            if (n < 2) return n;
+            return fib(n - 1) + fib(n - 2);
+        }
+        const result = fib(40);
+        return new Response(`fib(40) = ${result}`);
+    })
+
 
 addEventListener('fetch', (event) => {
     event.respondWith(router.fetch(event.request));
