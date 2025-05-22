@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart CMS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        input, button, textarea {
+            margin: 10px 0;
+            padding: 8px;
+            width: 100%;
+            max-width: 500px;
+            font-size: 16px;
+        }
+        button {
+            cursor: pointer;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #f9f9f9;
+            white-space: pre-wrap;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<h1>Smart CMS</h1>
+
+<h2>Create a Story</h2>
+<p><em>Note: Story titles cannot contain spaces.</em></p>
+<input id="create-title" type="text" placeholder="Story Title">
+<textarea id="create-content" placeholder="Story Content"></textarea>
+<button onclick="createStory()">Create Story</button>
+
+<h2>Get a Story</h2>
+<p><em>Note: Story titles cannot contain spaces.</em></p>
+<input id="get-title" type="text" placeholder="Story Title">
+<button onclick="getStory()">Get Story</button>
+
+<h2>Generate a Story</h2>
+<button onclick="generateStory()">Generate Story</button>
+
+<div id="output" class="output"></div>
+
+<script>
+    const API_BASE = 'http://127.0.0.1:8000';
+
+    async function createStory() {
+        let title = document.getElementById('create-title').value.trim();
+        let content = document.getElementById('create-content').value;
+
+        // Check for spaces in the title
+        if (title.includes(' ')) {
+            showOutput('Error: The story title cannot contain spaces.');
+            return;
+        }
+
+        if (!title || !content) {
+            showOutput('Please enter both a title and content.');
+            return;
+        }
+
+        // Combine title and content with a newline separator
+        const body = `${title}\n${content}`;
+
+        try {
+            const response = await fetch(`${API_BASE}/create`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain' },
+                body: body
+            });
+
+            const result = await response.text();
+            showOutput(result || 'Story created successfully.');
+        } catch (err) {
+            showOutput('Error creating story.');
+        }
+    }
+
+    async function getStory() {
+        let title = document.getElementById('get-title').value.trim();
+
+        // Check for spaces in the title
+        if (title.includes(' ')) {
+            showOutput('Error: The story title cannot contain spaces.');
+            return;
+        }
+
+        if (!title) {
+            showOutput('Please enter a title.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE}/retrieve`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain' },
+                body: title
+            });
+
+            const result = await response.text();
+
+            if (result === 'Story not found') {
+                showOutput(result);
+                return;
+            }
+
+            showOutput(`Title: ${title}\n\n${result}`);
+        } catch (err) {
+            showOutput('Error retrieving story.');
+        }
+    }
+
+    async function generateStory() {
+        try {
+            const response = await fetch(`${API_BASE}/generate`, {
+                method: 'GET',
+            });
+
+            const result = await response.text();
+
+            // Split the result into lines
+            const lines = result.split('\n');
+            const title = lines[0];
+            const content = lines.slice(1).join('\n');
+
+            showOutput(`Title: ${title}\n\n${content}`);
+        } catch (err) {
+            showOutput('Error generating story.');
+        }
+    }
+
+    function showOutput(message) {
+        const output = document.getElementById('output');
+        output.textContent = message;
+        output.style.display = 'block';
+    }
+</script>
+</body>
+</html>
