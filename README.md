@@ -17,5 +17,9 @@ The book is still under development, so this repository will be updated as I pro
 - Part 3: Wasm on the Cloud and the Edge
     - [x] Chapter 7 (Distributing and deploying Wasm)
     - [x] Chapter 8 (Scalability for Wasm with Kubernetes)
-    - [ ] Chapter 9 (Wasm for Edge Devices and IoT)
+    - [ ] Chapter 9 (Future of Wasm on the Server)
+- Appendices
+    - [x] Appendix A (Citations)
+    - [x] Appendix B (Required tools)
+    - [x] Appendix C (Deploying the SmartCMS to Azure Kubernetes Service)
 
