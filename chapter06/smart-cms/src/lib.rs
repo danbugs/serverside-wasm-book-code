@@ -16,7 +16,7 @@ impl http::Server for Component {
         let (parts, mut body) = request.into_parts();
 
         match parts.uri.path() {
-            "/create" => {
+            "/api/create" => {
                 let bucket = store::open("default").unwrap();
 
                 let mut buf = Vec::new();
@@ -31,7 +31,7 @@ impl http::Server for Component {
 
                 Ok(http::Response::new(format!("Stored {}\n", story_name)))
             }
-            "/retrieve" => {
+            "/api/retrieve" => {
                 let bucket = store::open("default").unwrap();
 
                 let mut buf = Vec::new();
@@ -48,7 +48,7 @@ impl http::Server for Component {
                     }
                 }
             }
-            "/generate" => {
+            "/api/generate" => {
                 let prompt = "Once upon a time".to_string();
                 let generated_story = generate(&Request {
                     prompt: prompt.clone(),
