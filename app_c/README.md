@@ -86,7 +86,7 @@ kubectl apply -f cluster-issuer.yaml
 
 (5) Create Wasmcloud host
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/danbugs/serverside-wasm-book-code/refs/heads/main/app_c/backend/wasmcloud-host.yaml
+kubectl apply -f https://raw.githubusercontent.com/danbugs/serverside-wasm-book-code/refs/heads/main/app_c/setup/wasmcloud-host.yaml
 ```
 
 ### Deploy the SmartCMS
