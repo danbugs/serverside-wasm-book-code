@@ -1,4 +1,4 @@
-package component: smartcms-ml-guest;
+package component:smartcms-ml-guest;
 
 world example {
     export storygen: func() -> string;

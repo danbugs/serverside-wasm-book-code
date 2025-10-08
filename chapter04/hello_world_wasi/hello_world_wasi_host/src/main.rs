@@ -18,7 +18,6 @@ impl wasmtime_wasi::IoView for State {
     fn table(&mut self) -> &mut wasmtime_wasi::ResourceTable {
         &mut self.table
     }
-
 }
 
 fn main() {
