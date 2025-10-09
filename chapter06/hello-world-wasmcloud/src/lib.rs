@@ -1,4 +1,3 @@
-use std::time;
 use wasmcloud_component::http;
 use wasmcloud_component::wasi::keyvalue::*;
 
@@ -12,7 +11,7 @@ impl http::Server for Component {
     ) -> http::Result<http::Response<impl http::OutgoingBody>> {
         let bucket = store::open("default").unwrap();
         let count = atomics::increment(&bucket, "counter", 1).unwrap();
-        std::thread::sleep(time::Duration::from_secs(2));
+        std::thread::sleep(std::time::Duration::from_secs(2));
 
         Ok(http::Response::new(format!("Hello! I was called {count} times\n")))
     }
