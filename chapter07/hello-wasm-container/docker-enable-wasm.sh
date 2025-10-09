@@ -34,14 +34,14 @@ echo "[LOG] Docker restarted."
 # Step 3: Download the appropriate runwasi release
 ARCH=$(uname -m)
 RELEASE_VERSION="v0.5.0"
-BASE_URL="https://github.com/containerd/runwasi/releases/download/containerd-shim-wasmtime%2F${RELEASE_VERSION}"
+BASE_URL="https://github.com/containerd/runwasi/releases/download/containerd-shim-wasmedge%2F${RELEASE_VERSION}"
 
 case "$ARCH" in
     x86_64)
-        FILENAME="containerd-shim-wasmtime-x86_64-linux-musl.tar.gz"
+        FILENAME="containerd-shim-wasmedge-x86_64-linux-musl.tar.gz"
         ;;
     aarch64)
-        FILENAME="containerd-shim-wasmtime-aarch64-linux-musl.tar.gz"
+        FILENAME="containerd-shim-wasmedge-aarch64-linux-musl.tar.gz"
         ;;
     *)
         echo "[ERROR] Unsupported architecture: $ARCH"
@@ -57,13 +57,13 @@ echo "[LOG] Extracting $FILENAME..."
 tar -xzf "$FILENAME"
 
 # Step 4: Install the shim binary
-echo "[LOG] Installing containerd-shim-wasmtime-v1 to /usr/local/bin..."
-chmod +x containerd-shim-wasmtime-v1
-sudo install containerd-shim-wasmtime-v1 /usr/local/bin/
+echo "[LOG] Installing containerd-shim-wasmedge-v1 to /usr/local/bin..."
+chmod +x containerd-shim-wasmedge-v1
+sudo install containerd-shim-wasmedge-v1 /usr/local/bin/
 
 # Step 5: Cleanup
 echo "[LOG] Cleaning up downloaded files..."
-rm -rf containerd-shim-wasmtime-*
+rm -rf containerd-shim-wasmedge-*
 
 echo "[LOG] Shim installed and system cleaned up successfully."
 echo "[LOG] Setup complete."
