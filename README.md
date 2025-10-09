@@ -16,7 +16,7 @@ The book is still under development, so this repository will be updated as I pro
     - [x] Chapter 6 (Creating Production-Grade Wasm Applications)
     - [x] Chapter 7 (Distributing and deploying Wasm)
     - [x] Chapter 8 (Scalability for Wasm with Kubernetes)
-    - [ ] Chapter 9 (Future of Wasm on the Server)
+    - [x] Chapter 9 (Future of Wasm on the Server)
 - Appendices
     - [x] Appendix A (Citations)
     - [x] Appendix B (Required tools)
