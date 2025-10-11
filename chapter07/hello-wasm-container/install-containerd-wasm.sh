@@ -7,7 +7,7 @@ echo "[LOG] Starting containerd and Wasm setup..."
 # Step 1: Install containerd
 echo "[LOG] Installing containerd..."
 
-CONTAINERD_VERSION="2.0.0"
+CONTAINERD_VERSION="1.7.27"
 ARCH=$(uname -m)
 
 case "$ARCH" in
