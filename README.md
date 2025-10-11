@@ -21,4 +21,3 @@ The book is still under development, so this repository will be updated as I pro
     - [x] Appendix A (Citations)
     - [x] Appendix B (Required tools)
     - [x] Appendix C (Deploying the SmartCMS to Azure Kubernetes Service)
-
